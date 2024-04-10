@@ -31,7 +31,7 @@ e poi ho fatto in modo che non mi chieda le credenziali ogni volta che faccio un
 Poi uguale allo switch prima fatto partire topologia a stella con 3 host  
 `sudo mn --mac --topo single,3 --controller remote`
 
-fatto partire il controller questa volta nella mia cartella  
+Fatto partire il controller questa volta nella mia cartella  
 `ryu-manager sdn-project/sdn-lab-template/2_hub/hub2.py flowmanager/flowmanager.py`
 
 E viste le nuove regole su flowmanager su firefox allo stesso indirizzo
