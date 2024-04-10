@@ -6,8 +6,9 @@ from ryu.ofproto import ofproto_v1_3
 from ryu.lib.packet import packet, ethernet, ether_types
 
 # This implements a learning switch in the controller
-# The switch sends all packet to the controller
+# The switch sends all packet to the controller.
 # The controller implements the MAC table using a python dictionary
+
 
 class PsrSwitch(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
@@ -17,6 +18,7 @@ class PsrSwitch(app_manager.RyuApp):
         self.mac_to_port = {}
 
     # execute at switch registration
+    # Features handler
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
@@ -48,7 +50,7 @@ class PsrSwitch(app_manager.RyuApp):
         )
         datapath.send_msg(mod)
 
-
+    # Packet-In handler
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
     def _packet_in_handler(self, ev):
         msg = ev.msg
