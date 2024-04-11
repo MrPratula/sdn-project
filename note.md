@@ -1,3 +1,19 @@
+### 20240411
+
+Deciso che devo riguardare i lab. Ho guardato lab 3.  
+Gli switch sono tanti. Il controllore è uno solo ed è un nodo a parte.  
+Gli switch di base mandano tutto al controllore. Il controllore ha le tabelle di routing di tutti gli switch.  
+Il controllore legge gli indirizzi dei pacchetti e asocial porte degli switch, id degli switch e mac di destinazione dei 
+pacchetti.  
+In pratica il controllore ha una mega tabella di tabelle, la `mac_to_port` che contiene la tabella di routing di ogni 
+switch.  
+A ogni pacchetto ricevuto mette dentro lo switch da cui l'ha ricevuto, la porta dello switch e l'indirizzo eth da cui 
+è arrivato.  
+Poi controlla se sa dove mandare quel pacchetto. Se lo sa glie lo manda, altrimenti lo manda in FLOOD. 
+
+
+
+
 ### 20240410
 
 Visto esercizio 3 del lab open flow. Ogni host è collegato alla porta 1 dello switch, per questo il check è sempre su
