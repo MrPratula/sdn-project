@@ -1,4 +1,13 @@
 ### 20240412
+Riguardato lab 4
+ - esercizio 1  
+
+docker non salva le credenziali per git mi sa.
+fatto partire la topologia incasinata con  
+`sudo mn --arp --mac --topo torus,3,3 --controller remote`  
+fatto partire il controller con interfaccia con il discovery della topologia con:  
+` `
+
 
 
 ### 20240411
@@ -13,8 +22,6 @@ switch.
 A ogni pacchetto ricevuto mette dentro lo switch da cui l'ha ricevuto, la porta dello switch e l'indirizzo eth da cui 
 è arrivato.  
 Poi controlla se sa dove mandare quel pacchetto. Se lo sa glie lo manda, altrimenti lo manda in FLOOD. 
-
-
 
 
 ### 20240410

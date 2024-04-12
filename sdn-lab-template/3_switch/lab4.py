@@ -23,7 +23,7 @@ class Lab4SDN(app_manager.RyuApp):
 
         actions = parser.OFPActionOutput(ofproto.OFPP_CONTROLLER, ofproto.OFPCML_NO_BUFFER)
 
-        instructions = [parser.OFPInstructionsActions(ofproto.OFPIT_APPLY_ACTIONS, [actions])]
+        instructions = [parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS, [actions])]
 
         # messaggio di tipo flow mod
         mod = parser.OFPFlowMod(datapath=datapath, priority=0, match=match, instructions=instructions)
