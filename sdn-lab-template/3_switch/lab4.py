@@ -102,7 +102,7 @@ class Lab4SDN(app_manager.RyuApp):
 
         actions = [parser.OFPActionOutput(output_port)]
 
-        out = parser.OFPPAcketOut(
+        out = parser.OFPPacketOut(
             datapath=datapath,
             buffer_id=ev.msg.buffer_id,
             in_port=input_port,
