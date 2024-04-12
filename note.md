@@ -2,11 +2,12 @@
 Riguardato lab 4
  - esercizio 1  
 
-docker non salva le credenziali per git mi sa.
-fatto partire la topologia incasinata con  
+Docker non salva le credenziali per git mi sa.
+Fatto partire la topologia incasinata con  
 `sudo mn --arp --mac --topo torus,3,3 --controller remote`  
 fatto partire il controller con interfaccia con il discovery della topologia con:  
-` `
+`ryu-manager --observe-links sdn-project/sdn-lab-template/3_switch/lab4.py flowmanager/flowmanager.py`  
+e controllato su firefox che andase tutto. nella sezione flows si possono vedere le tabelle di routing aggiornate. 
 
 
 
