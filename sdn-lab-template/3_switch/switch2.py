@@ -5,10 +5,12 @@ from ryu.controller.handler import set_ev_cls
 from ryu.ofproto import ofproto_v1_3
 from ryu.lib.packet import packet, ethernet, ether_types
 
+
 # This implements a learning switch in the controller
-# The switch sends all packets to the controller
+# The switch sends all packets to the controller.
 # The controller implements the MAC table using a python dictionary
 # If the MAC dst is known, add rule to the switch
+
 class PsrSwitch(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
@@ -46,7 +48,6 @@ class PsrSwitch(app_manager.RyuApp):
         )
         datapath.send_msg(mod)
 
-
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
     def _packet_in_handler(self, ev):
         msg = ev.msg
@@ -74,7 +75,7 @@ class PsrSwitch(app_manager.RyuApp):
         else:
             out_port = ofproto.OFPP_FLOOD
 
-#        self.logger.info("packet in %s %s %s %s %s", dpid, src, dst, in_port, out_port)
+        #        self.logger.info("packet in %s %s %s %s %s", dpid, src, dst, in_port, out_port)
 
         actions = [
             parser.OFPActionOutput(out_port)
@@ -94,7 +95,7 @@ class PsrSwitch(app_manager.RyuApp):
         # if the output port is not FLOODING
         # install a new flow rule *for the next packets*
         if out_port != ofproto.OFPP_FLOOD:
-        	# install a new flow rule
+            # install a new flow rule
             match = parser.OFPMatch(
                 eth_src=src,
                 eth_dst=dst
