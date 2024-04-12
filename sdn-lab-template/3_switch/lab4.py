@@ -121,7 +121,7 @@ class Lab4SDN(app_manager.RyuApp):
         )
 
         instructions = [
-            parser.OFPInstructionsActions(
+            parser.OFPInstructionActions(
                 ofproto.OFPIT_APPLY_ACTIONS,
                 [actions]
             )
