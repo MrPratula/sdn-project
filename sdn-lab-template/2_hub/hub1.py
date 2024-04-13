@@ -8,9 +8,9 @@ from ryu.controller import ofp_event
 from ryu.controller.handler import set_ev_cls, CONFIG_DISPATCHER
 from ryu.ofproto import ofproto_v1_3
 
+
 # Classe principale, derivata da RyuApp
 class PolimiHub(app_manager.RyuApp):
-
     # usiamo openflow 1.3
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 

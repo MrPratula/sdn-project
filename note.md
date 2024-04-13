@@ -1,3 +1,23 @@
+
+### 20240413
+Riguardato lab 5
+
+aprire una topologia a stella con 3 nodi:  
+`sudo mn --mac --topo single,3 --controller remote`
+
+poi apro un servizio in ascolto sulla porta 80 in h2 in modo da potergli far ricevere il traffico  
+`mininet/util/m h2 nc -l -p 80`
+
+e apro un'altro processo in un altro terminale in ascolto sullaporta 8080  
+`mininet/util/m h2 nc -l -p 8080`
+
+poi apriamo su h1 un processo che si collega ad h2 sulla porta 80  
+`mininet/util/m h1 nc 10.0.0.2 80`
+
+in questo momento quello che scrivo da h1 a h2 sulla porta 80, dovrebbe arrivare ad h2 sulla porta 80.  
+
+
+
 ### 20240412
 Riguardato lab 4
  - esercizio 1  
@@ -9,6 +29,7 @@ fatto partire il controller con interfaccia con il discovery della topologia con
 `ryu-manager --observe-links sdn-project/sdn-lab-template/3_switch/lab4.py flowmanager/flowmanager.py`  
 e controllato su firefox che andase tutto. nella sezione flows si possono vedere le tabelle di routing aggiornate. 
 
+ - esercizio 2 ez
 
 
 ### 20240411
