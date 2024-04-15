@@ -9,6 +9,56 @@ from ryu.lib.packet import packet, ethernet, ether_types, ipv4, tcp, ospf, bgp, 
 import networkx as nx
 
 
+def should_pass(pkt):
+
+    eth = pkt.get_protocol(ethernet.ethernet)
+
+    # Se il pacchetto è ehernet
+    if eth.ethertype == ether_types.ETH_TYPE_IP:
+
+        # se il pacchetto eth è un LLDP
+        if eth.ethertype == ether_types.ETH_TYPE_LLDP:
+            return True, "LLDP"
+
+    # se il pacchetto è IPv4
+    else:
+
+        ip = pkt.get_protocol(ipv4.ipv4)
+
+        if ip.proto == ipv4.inet.IPPROTO_ICMP:
+            return True, "ICMP"
+        elif ip.proto == ipv4.inet.IPPROTO_OSPF:
+            return True, "OSPF"
+
+        elif ip.proto == ipv4.inet.IPPROTO_TCP:
+
+            tcp_packet = pkt.get_protocol(tcp.tcp)
+
+            # se il pacchetto è http (== porta 80)
+            if tcp_packet.dst_port == 80:
+
+                # se è http GET
+                if b'GET' not in tcp_packet.data:
+                    return True, "HTTP GET"
+                else:
+
+                    # TODO
+                    # check if it is a response to a previously received http GET
+                    condition = True
+
+                    if condition:
+                        return True, "HTTP RESPONSE"
+
+            # Se il pacchetto è TCP e la porta no è 80
+            else:
+
+                # allow syn and ack for TCP handshake
+                if tcp_packet.syn or tcp_packet.ack:
+                    return True, "TCP HANDSHAKE"
+
+    return False
+
+
 class Lab4SDN(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
@@ -71,51 +121,10 @@ class Lab4SDN(app_manager.RyuApp):
         # parsing del pacchetto
 
         pkt = packet.Packet(ev.msg.data)
+
+        values = should_pass(pkt)
+
         eth = pkt.get_protocol(ethernet.ethernet)
-
-
-        # ignora pacchetti non IPv4
-        if eth.ethertype != ether_types.ETH_TYPE_IP:
-            #  tranne gli LLDP
-            if eth.ethertype != ether_types.ETH_TYPE_LLDP:
-                return
-
-        ip = pkt.get_protocol(ipv4.ipv4)
-
-
-
-        # controllare che pacchetto è:
-
-        # permettere ai pacchetti ospf e bgp di passare
-        if ip.proto == ipv4.inet.IPPROTO_OSPF:
-
-            ospf_pkt = pkt.get_protocol(ospf.OSPF)
-
-            # TODO
-            # da gestire flusso ospf per comunicazione switch
-
-        elif ip.proto == pkt.get_protocol(icmp.icmp):
-            # TODO allow icmp packet
-            pass
-
-
-        # ignora i pacchetti non tcp
-        elif ip.proto != ipv4.inet.IPPROTO_TCP:
-            return
-
-        tcp_packet = pkt.get_protocol(tcp.tcp)
-
-        # Ignore non-HTTP traffic (port 80) or non-TCP packets that are not HTTP GET requests
-        if tcp_packet and tcp_packet.dst_port == 80:
-            if b'GET' not in tcp_packet.data:
-                return
-
-        # this is tcp packet that is no on port 80
-        elif tcp_packet and tcp_packet.dst_port != 80:
-
-            # block tcp packets that are not syn or ack to allow tcp handshake
-            if not tcp_packet.syn or not tcp_packet.ack:
-                return
 
         # trovare switch di destinazione
 
