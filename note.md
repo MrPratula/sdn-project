@@ -8,7 +8,7 @@ aprire una topologia a stella con 3 nodi:
 poi apro un servizio in ascolto sulla porta 80 in h2 in modo da potergli far ricevere il traffico  
 `mininet/util/m h2 nc -l -p 80`
 
-e apro un'altro processo in un altro terminale in ascolto sullaporta 8080  
+e apro un'altro processo in un altro terminale in ascolto sulla porta 8080  
 `mininet/util/m h2 nc -l -p 8080`
 
 poi apriamo su h1 un processo che si collega ad h2 sulla porta 80  
