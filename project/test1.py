@@ -5,7 +5,7 @@ from ryu.controller.handler import set_ev_cls, CONFIG_DISPATCHER, MAIN_DISPATCHE
 from ryu.ofproto import ofproto_v1_3
 from ryu.topology import event, switches
 from ryu.topology.api import get_all_switch, get_all_link, get_all_host
-from ryu.lib.packet import packet, ethernet, ether_types, ipv4, tcp, ospf, bgp
+from ryu.lib.packet import packet, ethernet, ether_types, ipv4, tcp, ospf, bgp, icmp
 import networkx as nx
 
 
@@ -82,6 +82,8 @@ class Lab4SDN(app_manager.RyuApp):
 
         ip = pkt.get_protocol(ipv4.ipv4)
 
+
+
         # controllare che pacchetto è:
 
         # permettere ai pacchetti ospf e bgp di passare
@@ -91,6 +93,11 @@ class Lab4SDN(app_manager.RyuApp):
 
             # TODO
             # da gestire flusso ospf per comunicazione switch
+
+        elif ip.proto == pkt.get_protocol(icmp.icmp):
+            # TODO allow icmp packet
+            pass
+
 
         # ignora i pacchetti non tcp
         elif ip.proto != ipv4.inet.IPPROTO_TCP:
