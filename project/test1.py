@@ -15,6 +15,17 @@ def should_pass(pkt):
         print("discarded IPv6 packet")
         return False, "IPv6"
 
+    elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_ARP:
+        print("ARP packet")
+        return True, "ARP"
+
+
+    else:
+        pass
+
+    print(pkt.get_protocol(ethernet.ethernet).ethertype)
+    print(ether_types.ETH_TYPE_ARP)
+
     print()
     print("-------------------------------------")
 
