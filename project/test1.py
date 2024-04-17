@@ -11,6 +11,10 @@ import networkx as nx
 
 def should_pass(pkt):
 
+    if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
+        print("discarded IPv6 packet")
+        return False, "IPv6"
+
     print()
     print("-------------------------------------")
 
