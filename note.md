@@ -1,4 +1,15 @@
 
+### 20240417
+
+`ipv6(dst='ff02::2',ext_hdrs=[],flow_label=0,hop_limit=255,nxt=58,payload_length=16,src='fe80::200:ff:fe00:2',
+traffic_class=0,version=6)`
+
+
+
+
+
+
+
 ### 20240415
 
 Implementato in test1 la funzione should_pass() per decidere se il pacchetto deve passare o no.  
