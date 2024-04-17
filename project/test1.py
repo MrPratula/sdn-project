@@ -13,6 +13,9 @@ def should_pass(pkt):
 
     if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
 
+        print(pkt.get_protocol(ipv6.ipv6))
+        print(inet.IPPROTO_ICMPV6)
+
         if pkt.get_protocol(ipv6.ipv6) == inet.IPPROTO_ICMPV6:
             print("ICMPv6 packet")
             return True
