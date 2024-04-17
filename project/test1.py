@@ -2,19 +2,23 @@
 from ryu.base import app_manager
 from ryu.controller import ofp_event
 from ryu.controller.handler import set_ev_cls, CONFIG_DISPATCHER, MAIN_DISPATCHER
-from ryu.ofproto import ofproto_v1_3
+from ryu.ofproto import ofproto_v1_3, inet
 from ryu.topology import event, switches
 from ryu.topology.api import get_all_switch, get_all_link, get_all_host
-from ryu.lib.packet import packet, ethernet, ether_types, ipv4, tcp, ospf, bgp, icmp
+from ryu.lib.packet import packet, ethernet, ether_types, ipv4, ipv6, tcp, ospf, bgp, icmp
 import networkx as nx
 
 
 def should_pass(pkt):
 
     if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
-        print("discarded IPv6 packet")
-        print(pkt)
-        return False
+
+        if pkt.get_protocol(ipv6.ipv6) == inet.IPPROTO_ICMPV6:
+            print("ICMPv6 packet")
+            return True
+        else:
+            print("discarded IPv6 packet")
+            return False
 
     elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_ARP:
         print("ARP packet")
