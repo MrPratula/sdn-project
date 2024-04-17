@@ -15,8 +15,9 @@ def should_pass(pkt):
 
         print(pkt)
         print(pkt.get_protocol(ipv6.ipv6))
+        print(pkt.get_protocol(icmp.icmp))
 
-        if pkt.get_protocol(ipv6.ipv6) == inet.IPPROTO_ICMPV6:
+        if pkt.get_protocol(icmp.icmp) == inet.IPPROTO_ICMPV6:
             print("ICMPv6 packet")
             return True
         else:

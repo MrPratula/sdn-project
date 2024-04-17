@@ -1,6 +1,11 @@
 
 ### 20240417
 
+ho questo pacchetto che è un icmpv6. lo riconosco come ipv6 ma devo prenderlo come icmpv6 e non riesco a riconoscerlo
+`ethernet(dst='33:33:00:00:00:02',ethertype=34525,src='00:00:00:00:00:02'), ipv6(dst='ff02::2',ext_hdrs=[],flow_label=0,hop_limit=255,nxt=58,payload_length=16,src='fe80::200:ff:fe00:2',traffic_class=0,version=6), icmpv6(code=0,csum=31530,data=nd_router_solicit(option=nd_option_sla(data=None,hw_src='00:00:00:00:00:02',length=1),res=0),type_=133)`
+
+
+
 `ipv6(dst='ff02::2',ext_hdrs=[],flow_label=0,hop_limit=255,nxt=58,payload_length=16,src='fe80::200:ff:fe00:2',
 traffic_class=0,version=6)`
 
