@@ -11,7 +11,14 @@ import networkx as nx
 
 def should_pass(pkt):
 
+    print()
+    print("-------------------------------------")
+
     print(pkt)
+    print("-------------------------------------")
+
+    print()
+
     eth = pkt.get_protocol(ethernet.ethernet)
 
     # Se il pacchetto è ehernet
