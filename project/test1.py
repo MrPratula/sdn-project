@@ -24,6 +24,7 @@ def should_pass(pkt):
     else:
 
         ip = pkt.get_protocol(ipv4.ipv4)
+        print(ip)
 
         if ip.proto == ipv4.inet.IPPROTO_ICMP:
             return True, "ICMP"
@@ -35,7 +36,9 @@ def should_pass(pkt):
             tcp_packet = pkt.get_protocol(tcp.tcp)
 
             # se il pacchetto è http (== porta 80)
-            if tcp_packet.dst_port == 80:
+            payload = pkt.protocols[-1]
+
+            if payload.startswith(b"GET") or payload.startswith(b"POST") or payload.startswith(b"HTTP"):
 
                 # se è http GET
                 if b'GET' not in tcp_packet.data:
@@ -57,6 +60,8 @@ def should_pass(pkt):
                     return True, "TCP HANDSHAKE"
 
     return False
+
+
 
 
 class Lab4SDN(app_manager.RyuApp):
