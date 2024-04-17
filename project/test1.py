@@ -13,27 +13,24 @@ def should_pass(pkt):
 
     if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
         print("discarded IPv6 packet")
-        return False, "IPv6"
+        return False
 
     elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_ARP:
         print("ARP packet")
-        return True, "ARP"
+        return True
 
 
     else:
-        pass
+        print()
+        print("-------------------------------------")
+        print(pkt)
+        print("-------------------------------------")
+        print()
 
-    print(pkt.get_protocol(ethernet.ethernet).ethertype)
-    print(ether_types.ETH_TYPE_ARP)
+        return False
 
-    print()
-    print("-------------------------------------")
-
-    print(pkt)
-    print("-------------------------------------")
-
-    print()
-
+    """
+    
     eth = pkt.get_protocol(ethernet.ethernet)
 
     # Se il pacchetto è ehernet
@@ -83,8 +80,7 @@ def should_pass(pkt):
                     return True, "TCP HANDSHAKE"
 
     return False
-
-
+    """
 
 
 class Lab4SDN(app_manager.RyuApp):
@@ -149,10 +145,10 @@ class Lab4SDN(app_manager.RyuApp):
         # parsing del pacchetto
 
         pkt = packet.Packet(ev.msg.data)
-
-        values = should_pass(pkt)
-
         eth = pkt.get_protocol(ethernet.ethernet)
+
+        if not should_pass(pkt):
+            return
 
         # trovare switch di destinazione
 
