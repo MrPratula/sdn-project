@@ -27,14 +27,12 @@ def should_pass(pkt):
         if ip_proto == inet.IPPROTO_ICMP:
 
             print("ICMP packet")
-
             return True
 
         else:
 
-            print("IP PACKET")
+            print("discarded IPv4 packet")
             return False
-
 
     else:
         print()
@@ -45,74 +43,16 @@ def should_pass(pkt):
 
         return False
 
-    """
-    
-    eth = pkt.get_protocol(ethernet.ethernet)
-
-    # Se il pacchetto è ehernet
-    if eth.ethertype == ether_types.ETH_TYPE_IP:
-
-        # se il pacchetto eth è un LLDP
-        if eth.ethertype == ether_types.ETH_TYPE_LLDP:
-            return True, "LLDP"
-
-    # se il pacchetto è IPv4
-    else:
-
-        ip = pkt.get_protocol(ipv4.ipv4)
-        print(ip)
-
-        if ip.proto == ipv4.inet.IPPROTO_ICMP:
-            return True, "ICMP"
-        elif ip.proto == ipv4.inet.IPPROTO_OSPF:
-            return True, "OSPF"
-
-        elif ip.proto == ipv4.inet.IPPROTO_TCP:
-
-            tcp_packet = pkt.get_protocol(tcp.tcp)
-
-            # se il pacchetto è http (== porta 80)
-            payload = pkt.protocols[-1]
-
-            if payload.startswith(b"GET") or payload.startswith(b"POST") or payload.startswith(b"HTTP"):
-
-                # se è http GET
-                if b'GET' not in tcp_packet.data:
-                    return True, "HTTP GET"
-                else:
-
-                    # TODO
-                    # check if it is a response to a previously received http GET
-                    condition = True
-
-                    if condition:
-                        return True, "HTTP RESPONSE"
-
-            # Se il pacchetto è TCP e la porta no è 80
-            else:
-
-                # allow syn and ack for TCP handshake
-                if tcp_packet.syn or tcp_packet.ack:
-                    return True, "TCP HANDSHAKE"
-
-    return False
-    """
-
 
 class Lab4SDN(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
-    def __init__(self, *args, **kwargs):
-        super(Lab4SDN, self).__init__(*args, **kwargs)
-        self.mac_to_port = {}
-
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
+
         datapath = ev.msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
-
-        self.mac_to_port[datapath.id] = {}
 
         match = parser.OFPMatch()
 
@@ -185,7 +125,6 @@ class Lab4SDN(app_manager.RyuApp):
         eth = pkt.get_protocol(ethernet.ethernet)
 
         if not should_pass(pkt):
-            print("discard cuz should not pass")
             return
 
         # trovare switch di destinazione
