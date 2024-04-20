@@ -20,6 +20,16 @@ def should_pass(pkt):
         print("ARP packet")
         return True
 
+    elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IP:
+        print("IP packet")
+
+        print()
+        print("-------------------------------------")
+        print(pkt)
+        print("-------------------------------------")
+        print()
+        return True
+
 
     else:
         print()
@@ -163,9 +173,6 @@ class Lab4SDN(app_manager.RyuApp):
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
         input_port = ev.msg.match["in_port"]
-        dpid = datapath.id
-
-        print("DPID = ", dpid)
 
         # parsing del pacchetto
 
@@ -180,6 +187,9 @@ class Lab4SDN(app_manager.RyuApp):
 
         mac_dst = eth.dst
         dpid, port_no = self.find_destination_switch(mac_dst)
+
+        print("DPID = ", dpid)
+        print("PORT_NO = ", port_no)
 
         if dpid is None or port_no is None:
             # se l'host non esiste
