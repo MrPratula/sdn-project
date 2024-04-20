@@ -87,20 +87,41 @@ def should_pass(pkt):
 class Lab4SDN(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
 
+    def __init__(self, *args, **kwargs):
+        super(Lab4SDN, self).__init__(*args, **kwargs)
+        self.mac_to_port = {}
+
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
 
+        self.mac_to_port[datapath.id] = {}
+
         match = parser.OFPMatch()
 
-        actions = parser.OFPActionOutput(ofproto.OFPP_CONTROLLER, ofproto.OFPCML_NO_BUFFER)
+        actions = [
+            parser.OFPActionOutput(
+                ofproto.OFPP_CONTROLLER,
+                ofproto.OFPCML_NO_BUFFER
+            )
+        ]
 
-        instructions = [parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS, [actions])]
+        instructions = [
+            parser.OFPInstructionActions(
+                ofproto.OFPIT_APPLY_ACTIONS,
+                actions
+            )
+        ]
 
         # messaggio di tipo flow mod
-        mod = parser.OFPFlowMod(datapath=datapath, priority=0, match=match, instructions=instructions)
+        mod = parser.OFPFlowMod(
+            datapath=datapath,
+            priority=0,
+            match=match,
+            instructions=instructions
+        )
 
         datapath.send_msg(mod)
 
@@ -142,6 +163,9 @@ class Lab4SDN(app_manager.RyuApp):
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
         input_port = ev.msg.match["in_port"]
+        dpid = datapath.id
+
+        print("DPID = ", dpid)
 
         # parsing del pacchetto
 
