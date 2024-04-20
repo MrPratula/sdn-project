@@ -21,14 +21,19 @@ def should_pass(pkt):
         return True
 
     elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IP:
-        print("IP packet")
 
-        print()
-        print("-------------------------------------")
-        print(pkt)
-        print("-------------------------------------")
-        print()
-        return True
+        ip_proto = pkt.get_protocol(ipv4.ipv4).proto
+
+        if ip_proto == inet.IPPROTO_ICMP:
+
+            print("ICMP packet")
+
+            return True
+
+        else:
+
+            print("IP PACKET")
+            return False
 
 
     else:
