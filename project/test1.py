@@ -149,6 +149,7 @@ class Lab4SDN(app_manager.RyuApp):
         eth = pkt.get_protocol(ethernet.ethernet)
 
         if not should_pass(pkt):
+            print("discard cuz should not pass")
             return
 
         # trovare switch di destinazione
@@ -159,6 +160,7 @@ class Lab4SDN(app_manager.RyuApp):
         if dpid is None or port_no is None:
             # se l'host non esiste
             # o se l'host non ha mai parlato
+            print("discard cuz dpid or port_no is none")
             return
 
         # trovare shortest path verso destinazione
@@ -207,3 +209,5 @@ class Lab4SDN(app_manager.RyuApp):
         )
 
         datapath.send_msg(mod)
+
+        print("rule inserted!")
