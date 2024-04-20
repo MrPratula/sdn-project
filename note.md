@@ -8,6 +8,29 @@ con un comando che non ricordo e farlo ripartire.
 
 Adesso posso andare avanti con l'indicazione di ignorare IPv6.
 
+Se faccio:  
+`sudo mn --mac --topo single,3 --controller remote`  
+non funziona, mentre se faccio:  
+`sudo mn --arp --mac --topo single,3 --controller remote`  
+perdo alcuni pacchetti, poi va. 
+ - uno switch che non ha mai parlato non si può raggiungere, per questo i pacchetti iniziali si perdono.
+ - le regole sono installate la prima volta. I ping successivi non passano dal controller.
+  
+In ogni caso dopo devo fare   
+`ryu-manager --observe-links sdn-labs/sdn-project/project/test1.py flowmanager/flowmanager.py`  
+
+A questo punto:
+ - A cosa serve il `--arp`? 
+   - a riempire le tabelle di routing degli switch?
+     - no altrimenti il ping andrebbe subito invece non va subito, ma prima deve perdere dei pacchetti
+     - però serve perchè altrimenti non va niente. Quindi a cosa serve?
+ - Come faccio a far passare i pacchetti una volta sola? 
+   - A me serve farli passare all'inizio e poi decidere se far passare il flusso TCP con la GET
+     - Io faccio il check solo nella logica dell controller, poi la regola fa passare tutto, probabilmente devo mettere un filtro nella regola e far passare solo quello che matcho prima. 
+
+In ogni caso in questo momento il codice ha il controller che capisce quali sono i pacchetti ICMP, ARP, IPv6 e IPv4, ma 
+poi la regola la mette su tutti i pacchetti (probabilmente), quindi prossima volta parti a lavorare da questo: **il 
+match sulla regola**
 
 
 ### 20240417
