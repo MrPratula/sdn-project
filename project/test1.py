@@ -178,6 +178,7 @@ class Lab4SDN(app_manager.RyuApp):
         elif pkt_type == inet.IPPROTO_ICMP:
             match = parser.OFPMatch(
                 eth_dst=mac_dst,
+                eth_type=ether_types.ETH_TYPE_IP,
                 ip_proto=inet.IPPROTO_ICMP
             )
             prio = 110
