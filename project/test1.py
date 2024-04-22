@@ -174,14 +174,17 @@ class Lab4SDN(app_manager.RyuApp):
                 eth_dst=mac_dst,
                 eth_type=ether_types.ETH_TYPE_ARP
             )
+            prio = 100
         elif pkt_type == inet.IPPROTO_ICMP:
             match = parser.OFPMatch(
                 eth_dst=mac_dst,
                 ip_proto=inet.IPPROTO_ICMP
             )
+            prio = 110
         else:
             print("strange paket")
             match = None
+            prio = 1234
 
         actions = parser.OFPActionOutput(
             output_port
@@ -196,7 +199,7 @@ class Lab4SDN(app_manager.RyuApp):
 
         mod = parser.OFPFlowMod(
             datapath=datapath,
-            priority=10,
+            priority=prio,
             match=match,
             instructions=instructions
         )
