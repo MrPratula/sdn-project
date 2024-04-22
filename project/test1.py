@@ -1,24 +1,21 @@
-
 from ryu.base import app_manager
 from ryu.controller import ofp_event
 from ryu.controller.handler import set_ev_cls, CONFIG_DISPATCHER, MAIN_DISPATCHER
 from ryu.ofproto import ofproto_v1_3, inet
 from ryu.topology import event, switches
 from ryu.topology.api import get_all_switch, get_all_link, get_all_host
-from ryu.lib.packet import packet, ethernet, ether_types, ipv4, ipv6, tcp, ospf, bgp, icmp, icmpv6
+from ryu.lib.packet import packet, ethernet, ether_types, ipv4, arp, tcp, ospf, bgp, icmp, icmpv6
 import networkx as nx
 
 
-def should_pass(pkt):
-
+def check_pkt(pkt):
     if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
-
         print("discarded IPv6 packet")
         return False
 
     elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_ARP:
         print("ARP packet")
-        return True
+        return True, ether_types.ETH_TYPE_ARP
 
     elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IP:
 
@@ -27,7 +24,7 @@ def should_pass(pkt):
         if ip_proto == inet.IPPROTO_ICMP:
 
             print("ICMP packet")
-            return True
+            return True, inet.IPPROTO_ICMP
 
         else:
 
@@ -111,6 +108,7 @@ class Lab4SDN(app_manager.RyuApp):
     - inoltra il pacchetto al next hop
     - installa la regola nello switch
     """
+
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
     def _packet_in_handler(self, ev):
 
@@ -124,8 +122,13 @@ class Lab4SDN(app_manager.RyuApp):
         pkt = packet.Packet(ev.msg.data)
         eth = pkt.get_protocol(ethernet.ethernet)
 
-        if not should_pass(pkt):
+        values = check_pkt(pkt)
+        should_pass = values[0]
+
+        if not should_pass:
             return
+
+        pkt_type = values[1]
 
         # trovare switch di destinazione
 
@@ -166,7 +169,19 @@ class Lab4SDN(app_manager.RyuApp):
 
         # inserire la regola nello switch
 
-        match = parser.OFPMatch(eth_dst=mac_dst)
+        if pkt_type == ether_types.ETH_TYPE_ARP:
+            match = parser.OFPMatch(
+                eth_dst=mac_dst,
+                eth_type=ether_types.ETH_TYPE_ARP
+            )
+        elif pkt_type == inet.IPPROTO_ICMP:
+            match = parser.OFPMatch(
+                eth_dst=mac_dst,
+                ip_proto=inet.IPPROTO_ICMP
+            )
+        else:
+            print("strange paket")
+            match = None
 
         actions = parser.OFPActionOutput(
             output_port

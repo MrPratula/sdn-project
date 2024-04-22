@@ -1,4 +1,9 @@
 
+### 20240422
+
+
+
+
 ### 20240420 
 
 Docker non è persistente. I problemi che avevo non erano dovuti a IPv6, ma a Docker.  
