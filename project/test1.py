@@ -11,7 +11,7 @@ import networkx as nx
 def check_pkt(pkt):
     if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
         print("discarded IPv6 packet")
-        return False
+        return [False]
 
     elif pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_ARP:
         print("ARP packet")
@@ -29,7 +29,7 @@ def check_pkt(pkt):
         else:
 
             print("discarded IPv4 packet")
-            return False
+            return [False]
 
     else:
         print()
@@ -38,7 +38,7 @@ def check_pkt(pkt):
         print("-------------------------------------")
         print()
 
-        return False
+        return [False]
 
 
 class Lab4SDN(app_manager.RyuApp):
