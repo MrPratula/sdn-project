@@ -182,8 +182,8 @@ class Lab4SDN(app_manager.RyuApp):
                 ip_proto=inet.IPPROTO_ICMP
             )
             prio = 110
-        else:
-            print("strange paket")
+        else: # should not happen
+            print("strange packet")
             match = None
             prio = 1234
 

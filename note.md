@@ -1,7 +1,10 @@
 
 ### 20240422
 
-
+Le regole fatte con l'OPFMatch devono avere i prerequisiti che dice il prof nelle slide lab5, altrimenti esce  
+`ErrorMsg, 1, 4, 9`  
+Fatto questo si possono mettere le regole con prio diversa e match diversi sui diversi campi per far passare solo i 
+ping, gli arp e i lldp senza mettere ancora regole per TCP.
 
 
 ### 20240420 
