@@ -6,6 +6,8 @@ Le regole fatte con l'OPFMatch devono avere i prerequisiti che dice il prof nell
 Fatto questo si possono mettere le regole con prio diversa e match diversi sui diversi campi per far passare solo i 
 ping, gli arp e i lldp senza mettere ancora regole per TCP.
 
+Andare avanti mettendo regole match per syn e syn ack in modo da iniziare tcp e poi riconoscere http.
+
 
 ### 20240420 
 
