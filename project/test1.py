@@ -135,8 +135,8 @@ class Lab4SDN(app_manager.RyuApp):
         mac_dst = eth.dst
         dpid, port_no = self.find_destination_switch(mac_dst)
 
-        print("DPID = ", dpid)
-        print("PORT_NO = ", port_no)
+        # print("DPID = ", dpid)
+        # print("PORT_NO = ", port_no)
 
         if dpid is None or port_no is None:
             # se l'host non esiste
