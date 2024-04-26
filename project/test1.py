@@ -29,6 +29,7 @@ def check_pkt(pkt):
 
         elif ip_proto == inet.IPPROTO_TCP:
 
+
             print("TCP packet")
 
             print()
@@ -36,6 +37,11 @@ def check_pkt(pkt):
             print(pkt)
             print("-------------------------------------")
             print()
+
+            print(pkt.get_protocol(tcp.TCP_SYN))
+            print(pkt.get_protocol(tcp.TCP_ACK))
+
+
 
             return [False]
 
