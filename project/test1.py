@@ -9,6 +9,7 @@ import networkx as nx
 
 
 def check_pkt(pkt):
+
     if pkt.get_protocol(ethernet.ethernet).ethertype == ether_types.ETH_TYPE_IPV6:
         print("discarded IPv6 packet")
         return [False]
@@ -25,6 +26,18 @@ def check_pkt(pkt):
 
             print("ICMP packet")
             return True, inet.IPPROTO_ICMP
+
+        elif ip_proto == inet.IPPROTO_TCP:
+
+            print("TCP packet")
+
+            print()
+            print("-------------------------------------")
+            print(pkt)
+            print("-------------------------------------")
+            print()
+
+            return [False]
 
         else:
 
@@ -137,7 +150,7 @@ class Lab4SDN(app_manager.RyuApp):
                 eth_type=ether_types.ETH_TYPE_ARP
             )
 
-            prio = 100
+            prio = 5
 
             actions = parser.OFPActionOutput(
                 ofproto.OFPP_FLOOD
@@ -159,7 +172,7 @@ class Lab4SDN(app_manager.RyuApp):
 
             datapath.send_msg(mod)
 
-            print("special sule for ARP inserted")
+            print("special rule for ARP inserted")
             return
 
         # trovare switch di destinazione

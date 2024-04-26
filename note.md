@@ -1,3 +1,16 @@
+### 20240426
+
+Aggiunto il check nel controller che mette la regola per mandare gli ARP in FLOOD.  
+Questo era il motivo per cui prima senza --arp non andava. 
+Adesso posso far andare tutto senza --arp e anche senza --mac (anche se lo lascerò per comodità visto che non 
+hardcodo nessun mac)  
+`sudo mn --topo single,3 --controller remote`
+
+
+
+
+
+
 
 ### 20240422
 
