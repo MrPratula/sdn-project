@@ -42,9 +42,15 @@ def check_pkt(pkt):
 
             if tcp_pkt:
                 flags = tcp_pkt.bits
+
+                print("flags = ", flags)
+                print(tcp.TCP_SYN)
+                print(tcp.TCP_ACK)
+
                 if flags & tcp.TCP_SYN and not flags & tcp.TCP_ACK:
                     print("TCP handshake: SYN packet")
                     return True, inet.IPPROTO_TCP
+
                 elif flags & tcp.TCP_SYN and flags & tcp.TCP_ACK:
                     print("TCP handshake: SYN-ACK packet")
                     return True, inet.IPPROTO_TCP
