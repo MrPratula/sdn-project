@@ -6,6 +6,9 @@ Adesso posso far andare tutto senza --arp e anche senza --mac (anche se lo lasce
 hardcodo nessun mac)  
 `sudo mn --topo single,3 --controller remote`
 
+Per testare TCP ACK e SYN usare:
+`h1 curl 10.0.0.2`
+
 Per capire se il pacchetto TCP è un ACK o un SYN vediamo il flag `tcp.pkt.bits`.  
 Questo è un campo dell'header TCP che contiene 6 bit e serve a specificare:
 
