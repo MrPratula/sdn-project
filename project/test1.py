@@ -130,13 +130,42 @@ class Lab4SDN(app_manager.RyuApp):
 
         pkt_type = values[1]
 
+        # Handle ARP packets
+
+        if pkt_type == ether_types.ETH_TYPE_ARP:
+            match = parser.OFPMatch(
+                eth_type=ether_types.ETH_TYPE_ARP
+            )
+
+            prio = 100
+
+            actions = parser.OFPActionOutput(
+                ofproto.OFPP_FLOOD
+            )
+
+            instructions = [
+                parser.OFPInstructionActions(
+                    ofproto.OFPIT_APPLY_ACTIONS,
+                    [actions]
+                )
+            ]
+
+            mod = parser.OFPFlowMod(
+                datapath=datapath,
+                priority=prio,
+                match=match,
+                instructions=instructions
+            )
+
+            datapath.send_msg(mod)
+
+            print("special sule for ARP inserted")
+            return
+
         # trovare switch di destinazione
 
         mac_dst = eth.dst
         dpid, port_no = self.find_destination_switch(mac_dst)
-
-        # print("DPID = ", dpid)
-        # print("PORT_NO = ", port_no)
 
         if dpid is None or port_no is None:
             # se l'host non esiste
