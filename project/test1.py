@@ -31,28 +31,21 @@ def check_pkt(pkt):
 
             tcp_pkt = pkt.get_protocol(tcp.tcp)
 
-
-            print("TCP packet")
-
-            print()
-            print("-------------------------------------")
-            print(pkt)
-            print("-------------------------------------")
-            print()
-
             if tcp_pkt:
 
                 flags = tcp_pkt.bits
 
                 if flags & tcp.TCP_SYN and not flags & tcp.TCP_ACK:
-                    print("TCP handshake: SYN packet")
+                    print("SYN packet")
                     return True, "syn"
 
                 elif flags & tcp.TCP_SYN and flags & tcp.TCP_ACK:
-                    print("TCP handshake: SYN-ACK packet")
+                    print("ACK packet")
                     return True, "ack"
 
-            return [False]
+            else:
+                print("discarded UDP packet")
+                return [False]
 
         else:
 
@@ -249,7 +242,7 @@ class Lab4SDN(app_manager.RyuApp):
                 tcp_flags=(0x02, 0x02)  # SYN flag set
             )
 
-            prio = 20
+            prio = 21
             print("got SYN")
 
         elif pkt_type == "ack":
