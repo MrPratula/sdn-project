@@ -22,7 +22,12 @@ Nota:
 - il bit ACK nel field bits indica che il campo ACK dell'heder tcp è da considerare.
 - Il campo ACK dell'header TCP contiene il numero di ACK e il prossimo sequence number che il ricevitore si aspetta.
 
+Aggiunto script TCP client e server per fare HTTP get. 
 
+TODO: 
+- fare client e server UDP e TCP non HTTP GET
+- fare il riconoscimento dei pacchetti che mancano e aggiungere le regole
+- 
 
 ### 20240422
 
