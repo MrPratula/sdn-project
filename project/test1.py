@@ -41,21 +41,16 @@ def check_pkt(pkt):
             print()
 
             if tcp_pkt:
-                flags = tcp_pkt.bits
 
-                print("flags = ", flags)
-                print(tcp.TCP_SYN)
-                print(tcp.TCP_ACK)
+                flags = tcp_pkt.bits
 
                 if flags & tcp.TCP_SYN and not flags & tcp.TCP_ACK:
                     print("TCP handshake: SYN packet")
-                    return True, inet.IPPROTO_TCP
+                    return True, "syn"
 
                 elif flags & tcp.TCP_SYN and flags & tcp.TCP_ACK:
                     print("TCP handshake: SYN-ACK packet")
-                    return True, inet.IPPROTO_TCP
-
-
+                    return True, "ack"
 
             return [False]
 
@@ -244,6 +239,30 @@ class Lab4SDN(app_manager.RyuApp):
                 ip_proto=inet.IPPROTO_ICMP
             )
             prio = 110
+
+        elif pkt_type == "syn":
+
+            match = parser.OFPMatch(
+                eth_dst=mac_dst,
+                eth_type=ether_types.ETH_TYPE_IP,
+                ip_proto=inet.IPPROTO_TCP,
+                tcp_flags=(0x02, 0x02)  # SYN flag set
+            )
+
+            prio = 20
+            print("got SYN")
+
+        elif pkt_type == "ack":
+
+            match = parser.OFPMatch(
+                eth_dst=mac_dst,
+                eth_type=ether_types.ETH_TYPE_IP,
+                ip_proto=inet.IPPROTO_TCP,
+                tcp_flags=(0x10, 0x10)  # ACK flag set
+            )
+            print("GOT ACK")
+            prio = 20
+
         else: # should not happen
             print("strange packet")
             match = None

@@ -6,9 +6,21 @@ Adesso posso far andare tutto senza --arp e anche senza --mac (anche se lo lasce
 hardcodo nessun mac)  
 `sudo mn --topo single,3 --controller remote`
 
+Per capire se il pacchetto TCP è un ACK o un SYN vediamo il flag `tcp.pkt.bits`.  
+Questo è un campo dell'header TCP che contiene 6 bit e serve a specificare:
 
+1. URG (Urgent): Indicates that urgent data is present in the packet.
+2. ACK (Acknowledgment): Indicates that the Acknowledgment field is significant.
+3. PSH (Push): Indicates that the receiving TCP must push the buffered data to the application.
+4. RST (Reset): Indicates that the connection should be reset.
+5. SYN (Synchronize): Used in the TCP handshake to initiate a connection.
+6. FIN (Finish): Indicates the sender is finished sending data.
 
+Quindi nel codice quando faccio il check faccio l'AND bit a bit con il campo `bits` per vedere s è un ACK o un SYN.
 
+Nota: 
+- il bit ACK nel field bits indica che il campo ACK dell'heder tcp è da considerare.
+- Il campo ACK dell'header TCP contiene il numero di ACK e il prossimo sequence number che il ricevitore si aspetta.
 
 
 
