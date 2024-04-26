@@ -29,6 +29,8 @@ def check_pkt(pkt):
 
         elif ip_proto == inet.IPPROTO_TCP:
 
+            tcp_pkt = pkt.get_protocol(tcp.tcp)
+
 
             print("TCP packet")
 
@@ -38,8 +40,14 @@ def check_pkt(pkt):
             print("-------------------------------------")
             print()
 
-            print(pkt.get_protocol(tcp.TCP_SYN))
-            print(pkt.get_protocol(tcp.TCP_ACK))
+            if tcp_pkt:
+                flags = tcp_pkt.bits
+                if flags & tcp.TCP_SYN and not flags & tcp.TCP_ACK:
+                    print("TCP handshake: SYN packet")
+                    return True, inet.IPPROTO_TCP
+                elif flags & tcp.TCP_SYN and flags & tcp.TCP_ACK:
+                    print("TCP handshake: SYN-ACK packet")
+                    return True, inet.IPPROTO_TCP
 
 
 
