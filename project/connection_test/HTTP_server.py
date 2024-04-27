@@ -1,23 +1,22 @@
 
 import http.server
 import socketserver
+import sys
+
+if len(sys.argv) != 2:
+    print("Usage: python script.py <port>")
+    sys.exit(1)
+
+port = int(sys.argv[1])
+
+# Set up a simple HTTP request handler
+class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
+    pass
 
 
-def main():
-    # Define the port number you want to use
-    PORT = 8000
+# Create a TCP server
+with socketserver.TCPServer(("", port), MyHttpRequestHandler) as httpd:
+    print("Server started at localhost:" + str(port))
 
-    # Set up a simple HTTP request handler
-    class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
-        pass
-
-    # Create a TCP server
-    with socketserver.TCPServer(("", PORT), MyHttpRequestHandler) as httpd:
-        print("Server started at localhost:" + str(PORT))
-
-        # Start serving HTTP requests
-        httpd.serve_forever()
-
-
-if __name__ == "__main__":
-    main()
+    # Start serving HTTP requests
+    httpd.serve_forever()

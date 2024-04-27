@@ -1,30 +1,27 @@
 
-import urllib.request
+import sys
 import requests
 
 
-def main():
-    url = 'http://localhost:8000'
+if len(sys.argv) != 3:
+    print("Usage: python script.py <ip_address> <port>")
+    sys.exit(1)
 
-    try:
-        # Send a GET request to the server
-        response = requests.get(url)
+ip = sys.argv[1]
+port = int(sys.argv[2])
 
-        # Print the response status code
-        print("Response status code:", response.status_code)
+url = "http://{}:{}".format(ip, port)
 
-        # Print the response content (HTML page)
-        print("Response content:")
-        print(response.text)
+try:
+    # Send a GET request to the server
+    response = requests.get(url)
 
-    except requests.exceptions.RequestException as e:
-        print("Error:", e)
+    # Print the response status code
+    print("Response status code:", response.status_code)
 
+    # Print the response content (HTML page)
+    print("Response content:")
+    print(response.text)
 
-def test0():
-    contents = urllib.request.urlopen("https://info.cern.ch/").read()
-    print(contents)
-
-
-if __name__ == "__main__":
-    main()
+except requests.exceptions.RequestException as e:
+    print("Error:", e)
