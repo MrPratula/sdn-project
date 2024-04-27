@@ -1,3 +1,17 @@
+
+### 20240427
+
+Fatto gli script python che servono per testare connessioni tcp, udp e http. 
+Inizialmente avevo fatto un file solo con sia client sia server per catturare facilmente i pacchetti con wireshark, ma 
+poi li ho separati per farli partire su dispositivi diversi in lab. Per questo i file singoli vanno fatti partire 
+specificando ip e porta, ad esempio:   
+`python3 UDP_client.py 10.0.0.1 1234`
+
+I file .pacp contengono i pacchetti specifici generati in localhost e sono utili per farli vedere nella presentazione.
+Nei pcap si legge anche il payload con il testo che metto dentro io volendo (prendere il pacchetto più grosso).  
+Le immagini potrebbero essere utili per la presentazione.
+
+
 ### 20240426
 
 Aggiunto il check nel controller che mette la regola per mandare gli ARP in FLOOD.  
