@@ -45,13 +45,11 @@ def check_pkt(pkt):
 
                 else:
 
-                    eth_payload = pkt.get_protocol(ethernet.ethernet).payload
-                    ip_payload = eth_payload.get_protocol(ipv4.ipv4).payload
-                    tcp_payload = ip_payload.get_protocol(tcp.tcp).payload
+                    payload = b''.join([p.serialize() for p in pkt.protocols[2:]])
                     payload_data = None
 
-                    if tcp_payload:
-                        payload_data = tcp_payload.decode('utf-8', errors='ignore')
+                    if payload:
+                        payload_data = payload.decode('utf-8', errors='ignore')
 
                     print("discarded TCP packet")
                     print()
