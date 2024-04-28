@@ -47,7 +47,7 @@ def check_pkt(pkt):
                     print("discarded TCP packet")
                     print()
                     print("-------------------------------------")
-                    print(pkt)
+                    print(pkt.protocols[-1])
                     print("-------------------------------------")
                     print()
 
