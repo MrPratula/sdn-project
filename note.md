@@ -1,4 +1,19 @@
 
+### 2024428
+
+Non riesco ad aprire xterm con i terminali di h1 e h2 per far partire gli script  python per testare i pacchetti.   
+Per ora ho provato facendo  
+`h1 python3 ~/sdn-labs/sdn-project/project/connection_test/TCP_sender.py 10.0.0.2 1234`   
+ma così non si instaura mai la connessione TCP.   
+Per questo non riesco mai a stampare il payload. 
+
+I due script che da soli funzionano sono questi:
+`h2 python3 ~/sdn-labs/sdn-project/project/connection_test/TCP_receiver.py 10.0.0.2 12345`   
+`h1 python3 ~/sdn-labs/sdn-project/project/connection_test/TCP_sender.py 10.0.0.2 12345`  
+Ho provato a concatenarli con & ma non funziona. 
+Devo trovare un modo per far andare xterm
+
+
 ### 20240427
 
 Fatto gli script python che servono per testare connessioni tcp, udp e http. 
