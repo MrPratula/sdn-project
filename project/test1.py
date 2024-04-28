@@ -45,6 +45,13 @@ def check_pkt(pkt):
 
                 else:
                     print("discarded TCP packet")
+                    print()
+                    print("-------------------------------------")
+                    print(pkt)
+                    print("-------------------------------------")
+                    print()
+
+
                     return [False]
 
             else:
@@ -57,6 +64,7 @@ def check_pkt(pkt):
             return [False]
 
     else:
+        print("unknown packet")
         print()
         print("-------------------------------------")
         print(pkt)
