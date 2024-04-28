@@ -43,6 +43,10 @@ def check_pkt(pkt):
                     print("ACK packet")
                     return True, "ack"
 
+                else:
+                    print("discarded TCP packet")
+                    return [False]
+
             else:
                 print("discarded UDP packet")
                 return [False]

@@ -4,7 +4,7 @@ import requests
 
 
 if len(sys.argv) != 3:
-    print("Usage: python script.py <ip_address> <port>")
+    print("Usage: python3 HTTP_client.py <ip_address> <port>")
     sys.exit(1)
 
 ip = sys.argv[1]

@@ -4,7 +4,7 @@ import socketserver
 import sys
 
 if len(sys.argv) != 2:
-    print("Usage: python script.py <port>")
+    print("Usage: python3 HTTP_server.py <port>")
     sys.exit(1)
 
 port = int(sys.argv[1])

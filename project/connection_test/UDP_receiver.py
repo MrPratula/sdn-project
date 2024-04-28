@@ -3,7 +3,7 @@ import sys
 
 
 if len(sys.argv) != 3:
-    print("Usage: python script.py <ip_address> <port>")
+    print("Usage: python3 UDP_receiver.py <ip_address> <port>")
     sys.exit(1)
 
 ip = sys.argv[1]
