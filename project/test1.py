@@ -49,8 +49,7 @@ def check_pkt(pkt):
                     print("discarded TCP packet")
                     print()
                     print("-------------------------------------")
-                    if isinstance(payload, bytes):
-                        print(payload.decode('utf-8', errors='ignore'))
+                    print(payload.decode('utf-8', errors='ignore'))
                     print("-------------------------------------")
                     print()
 
