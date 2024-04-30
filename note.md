@@ -1,4 +1,17 @@
 
+### 2024043
+Grande Giacomino!!!
+(in realtà sebastiano mi aveva risposto la stessa cosa per email, ma non avevo capito un tubo)  
+
+Posso lanciare i comandi dagli host acedendo alla virtualizzazione di mininet nella cartella   
+`mininet/utils/m`  
+quindi posso fare ad esempio 
+`mininet/utils/m h1 ping 10.0.0.1`  
+e posso aprire diverse finestre collegate a docker per fare questa cosa. 
+
+Dovrebbe funzionare, andare avanti a lavorare partendo dal codice
+
+
 ### 2024428
 
 Non riesco ad aprire xterm con i terminali di h1 e h2 per far partire gli script  python per testare i pacchetti.   
