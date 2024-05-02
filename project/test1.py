@@ -45,7 +45,9 @@ def check_pkt(pkt):
 
                 else:
 
-                    if pkt.data.contains("HTTP/1.1") or pkt.data.contains("HTTP/1.0") or pkt.data.contains("HTTP/2.0"):
+                    pkt_str = str(pkt.data)
+
+                    if "HTTP/1.0" in pkt_str or "HTTP/1.1" in pkt_str or "HTTP/2.0" in pkt_str:
 
                         print("HTTP PACKET")
 
