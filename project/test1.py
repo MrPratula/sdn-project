@@ -44,13 +44,11 @@ def check_pkt(pkt):
                     return True, "ack"
 
                 else:
-                    eth_pkt = pkt.get_protocol(ethernet.ethernet)
-                    payload_data = eth_pkt.payload.data
 
                     print("discarded TCP packet")
                     print()
                     print("-------------------------------------")
-                    print(payload_data)
+                    print(pkt)
                     print("-------------------------------------")
                     print()
 
