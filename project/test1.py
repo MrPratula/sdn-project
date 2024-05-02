@@ -49,12 +49,17 @@ def check_pkt(pkt):
 
                     if "HTTP/1.0" in pkt_str or "HTTP/1.1" in pkt_str or "HTTP/2.0" in pkt_str:
 
-                        print("HTTP PACKET")
+                        if "GET" in pkt_str:
 
+                            print("HTTP GET packet")
 
+                            return True, "http"
 
+                        else:
 
-                        return [False]
+                            print("HTTP RESPONSE packet")
+
+                            return True, "http"
 
 
                     else:
@@ -281,6 +286,23 @@ class Lab4SDN(app_manager.RyuApp):
             )
             print("GOT ACK")
             prio = 20
+
+        elif pkt_type == "http":
+
+            tcp_pkt = pkt.get_protocol(tcp.tcp)
+
+            dst_port = tcp_pkt.dst_port
+
+            match = parser.OFPMatch(
+                eth_dst=mac_dst,
+                eth_type=ether_types.ETH_TYPE_IP,
+                ip_proto=inet.IPPROTO_TCP,
+                tcp_dst=dst_port
+            )
+
+            prio = 120
+
+            print("GOT HTTP")
 
         else: # should not happen
             print("strange packet")
