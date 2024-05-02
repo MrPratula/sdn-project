@@ -1,4 +1,10 @@
 
+### 20240502
+
+In teoria funziona. Blocca tutto tranne HTTP GET e stampa i pacchetti che non inoltra, così li vediamo.   
+TODO: fixare il ping iniziale che ogni tanto non va
+
+
 ### 2024043
 Grande Giacomino!!!
 (in realtà sebastiano mi aveva risposto la stessa cosa per email, ma non avevo capito un tubo)  
