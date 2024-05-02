@@ -45,10 +45,12 @@ def check_pkt(pkt):
 
                 else:
 
+
+
                     print("discarded TCP packet")
                     print()
                     print("-------------------------------------")
-                    print(pkt)
+                    print(pkt.data)
                     print("-------------------------------------")
                     print()
 
