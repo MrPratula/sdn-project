@@ -45,14 +45,24 @@ def check_pkt(pkt):
 
                 else:
 
+                    if pkt.data.contains("HTTP/1.1") or pkt.data.contains("HTTP/1.0") or pkt.data.contains("HTTP/2.0"):
+
+                        print("HTTP PACKET")
 
 
-                    print("discarded TCP packet")
-                    print()
-                    print("-------------------------------------")
-                    print(pkt.data)
-                    print("-------------------------------------")
-                    print()
+
+
+                        return [False]
+
+
+                    else:
+
+                        print("discarded TCP packet")
+                        print()
+                        print("-------------------------------------")
+                        print(pkt.data)
+                        print("-------------------------------------")
+                        print()
 
                     return [False]
 
