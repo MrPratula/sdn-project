@@ -9,7 +9,7 @@ TODO: fixare il ping iniziale che ogni tanto non va
 Grande Giacomino!!!
 (in realtà sebastiano mi aveva risposto la stessa cosa per email, ma non avevo capito un tubo)  
 
-Posso lanciare i comandi dagli host acedendo alla virtualizzazione di mininet nella cartella   
+Posso lanciare i comandi dagli host accedendo alla virtualizzazione di mininet nella cartella  
 `mininet/utils/m`  
 quindi posso fare ad esempio 
 `mininet/utils/m h1 ping 10.0.0.1`  
