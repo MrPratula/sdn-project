@@ -2,9 +2,8 @@ from ryu.base import app_manager
 from ryu.controller import ofp_event
 from ryu.controller.handler import set_ev_cls, CONFIG_DISPATCHER, MAIN_DISPATCHER
 from ryu.ofproto import ofproto_v1_3, inet
-from ryu.topology import event, switches
-from ryu.topology.api import get_all_switch, get_all_link, get_all_host
-from ryu.lib.packet import packet, ethernet, ether_types, ipv4, arp, tcp, ospf, bgp, icmp, icmpv6
+from ryu.topology.api import get_all_link, get_all_host
+from ryu.lib.packet import packet, ethernet, ether_types, ipv4, tcp
 import networkx as nx
 
 
@@ -56,17 +55,12 @@ def check_pkt(pkt):
                     if "HTTP/1.0" in pkt_str or "HTTP/1.1" in pkt_str or "HTTP/2.0" in pkt_str:
 
                         if "GET" in pkt_str:
-
                             print("HTTP GET packet")
-
                             return True, "http"
 
                         else:
-
                             print("HTTP RESPONSE packet")
-
                             return True, "http"
-
 
                     else:
 
@@ -84,7 +78,6 @@ def check_pkt(pkt):
                 return [False]
 
         else:
-
             print("discarded IPv4 packet")
             return [False]
 
@@ -228,7 +221,7 @@ class Lab4SDN(app_manager.RyuApp):
         if dpid is None or port_no is None:
             # se l'host non esiste
             # o se l'host non ha mai parlato
-            print("discard cuz dpid or port_no is none")
+            print("discard because dpid or port_no is none")
             return
 
         # trovare shortest path verso destinazione

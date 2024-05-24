@@ -2,6 +2,8 @@
 
 Project for the Software defined network course.
 
+(All the material in the folder sdn-lab-template are scripts provided by the professor available on his GitHub repo)
+
 The aim of the project is to use OpenFlow architecture to install rules on SDN switches to block all traffic that is
 not HTTP GET.
 
